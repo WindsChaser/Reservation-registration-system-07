@@ -77,4 +77,10 @@ namespace server
 		public DateTime time;
 		public double fee;
 	}
+
+	public class OperationTips
+	{
+		public static String reOpenDB = "系统基础数据库已连接！请勿重复连接";
+		public static String errOpenDB = "系统基础数据库连接失败！";
+	}
 }

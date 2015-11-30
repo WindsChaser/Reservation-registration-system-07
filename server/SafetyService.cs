@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace server
 {
-	class SafetyService
+	public class SafetyService:Service
 	{
+
 	}
 }

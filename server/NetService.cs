@@ -7,8 +7,8 @@ using System.Net;
 
 namespace server
 {
-	class NetService
+	public class NetService:Service
 	{
-
+		
 	}
 }
