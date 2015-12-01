@@ -67,30 +67,30 @@ namespace server
 
 		public bool startService()
 		{
-			DBState = dbService.startService() ? State.Suspend : State.Close;
-			netState = netService.startService() ? State.Suspend : State.Close;
-			helperState = helperService.startService() ? State.Suspend : State.Close;
-			safetyState = safetyService.startService() ? State.Suspend : State.Close;
+			DBState = dbService.startService() ? State.Running : State.Suspend;
+			netState = netService.startService() ? State.Running : State.Suspend;
+			helperState = helperService.startService() ? State.Running : State.Suspend;
+			safetyState = safetyService.startService() ? State.Running : State.Suspend;
 
 			return DBState == State.Running && netState == State.Running && helperState == State.Running && safetyState == State.Running;
 		}
 
 		public bool stopService()
 		{
-			DBState = dbService.stopService() ? State.Suspend : State.Close;
-			netState = netService.stopService() ? State.Suspend : State.Close;
-			helperState = helperService.stopService() ? State.Suspend : State.Close;
-			safetyState = safetyService.stopService() ? State.Suspend : State.Close;
+			DBState = dbService.stopService() ? State.Suspend : State.Running;
+			netState = netService.stopService() ? State.Suspend : State.Running;
+			helperState = helperService.stopService() ? State.Suspend : State.Running;
+			safetyState = safetyService.stopService() ? State.Suspend : State.Running;
 
 			return DBState == State.Suspend && netState == State.Suspend && helperState == State.Suspend && safetyState == State.Suspend;
 		}
 
 		public bool closeService()
 		{
-			DBState = dbService.closeService() ? State.Suspend : State.Close;
-			netState = netService.closeService() ? State.Suspend : State.Close;
-			helperState = helperService.closeService() ? State.Suspend : State.Close;
-			safetyState = safetyService.closeService() ? State.Suspend : State.Close;
+			DBState = dbService.closeService() ? State.Close : State.Suspend;
+			netState = netService.closeService() ? State.Close : State.Suspend;
+			helperState = helperService.closeService() ? State.Close : State.Suspend;
+			safetyState = safetyService.closeService() ? State.Close : State.Suspend;
 
 			return DBState == State.Close && netState == State.Close && helperState == State.Close && safetyState == State.Close;
 		}
