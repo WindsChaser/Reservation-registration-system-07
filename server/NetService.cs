@@ -50,55 +50,55 @@ namespace server
 		#region 服务器类
 		public class BroadcastServer
 		{
-			private UdpClient GameServerBroadcast;//游戏开始广播服务器
+			private UdpClient SendBroadcastServer;//广播发送服务器
 			private IPEndPoint DeclareBroadcastAreaIEP;//广播地址段
 			public IPEndPoint LocalIEP_send;//本机发送IP节点
 
-			private UdpClient GameServerBroadcastRecieve;//游戏广播响应接收服务器
+			private UdpClient RecieveBroadcastServer;//广播接收服务器
 			private IPEndPoint ReceiveBroadcastAreaIEP;//接收地址段
 			public IPEndPoint LocalIEP_receive;//本机接收IP节点
 
-			public IPEndPoint GameServerIEP_receive;//游戏服务器接收节点
-			public IPEndPoint GameServerIEP_send;//游戏服务器发送节点
+			public IPEndPoint ServerIEP_receive;//主服务器接收节点
+			public IPEndPoint ServerIEP_send;//主服务器发送节点
 
-			public UdpClient GameServer_receive;
-			public UdpClient GameServer_send;
+			public UdpClient Server_receive;
+			public UdpClient Server_send;
 
-			private String GameServerBeginRunDeclare = "This is the game \"Bomb-man\" server";//游戏服务器验证声明
-			private String Response = "This is a game client";//客户端验证声明
-															  /// <summary>
-															  /// 构造函数，创建广播发送和接收服务器，以及游戏服务器监听器
-															  /// </summary>
-															  /// <param name="tcpl"></param>
+			private String ServerBeginRunDeclare = "This is server";//服务器验证声明
+			private String Response = "This is client";//客户端验证声明
+													   /// <summary>
+													   /// 构造函数，创建广播发送和接收服务器，以及主服务器监听器
+													   /// </summary>
+													   /// <param name="tcpl"></param>
 			public BroadcastServer( ref UdpClient udp1, ref UdpClient udp2 )
 			{
-				LocalIEP_send = new IPEndPoint( NetService.localIP, NetService.GetFirstAvailablePort() );//选取开始广播服务器地址
-				GameServerBroadcast = new UdpClient( LocalIEP_send );//创建开始广播服务器
-				LocalIEP_receive = new IPEndPoint( NetService.localIP, NetService.GetFirstAvailablePort() );//选取响应接收服务器地址
-				GameServerBroadcastRecieve = new UdpClient( LocalIEP_receive );//创建响应接收服务器
+				LocalIEP_send = new IPEndPoint( localIP, GetFirstAvailablePort() );//选取广播发送服务器地址
+				SendBroadcastServer = new UdpClient( LocalIEP_send );//创建开始广播服务器
+				LocalIEP_receive = new IPEndPoint( localIP, GetFirstAvailablePort() );//选取广播接收接收服务器地址
+				RecieveBroadcastServer = new UdpClient( LocalIEP_receive );//创建响应接收服务器
+
+
 				DeclareBroadcastAreaIEP = new IPEndPoint( IPAddress.Broadcast, 23333 );
 				//广播发送范围为默认广播地址，端口为23333
-				ReceiveBroadcastAreaIEP = new IPEndPoint( NetService.localIP, NetService.GetFirstAvailablePort() );//创建接收地址段
+				ReceiveBroadcastAreaIEP = new IPEndPoint( localIP, GetFirstAvailablePort() );//创建接收地址段
 
-				GameServerIEP_receive = new IPEndPoint( NetService.localIP, NetService.GetFirstAvailablePort() );//选取游戏服务器地址和端口
-				GameServer_receive = udp1 = new UdpClient( GameServerIEP_receive );
-				GameServerIEP_send = new IPEndPoint( NetService.localIP, NetService.GetFirstAvailablePort() );//选取游戏服务器地址和端口
-				GameServer_send = udp2 = new UdpClient( GameServerIEP_send );
-				//Console.WriteLine(LocalIEP_send.ToString());
-				//Console.WriteLine(LocalIEP_receive.ToString());
-				//Console.WriteLine(GameServerListener.ToString());
+
+				ServerIEP_receive = new IPEndPoint( localIP, GetFirstAvailablePort() );//选取主服务器接收地址和端口
+				Server_receive = udp1 = new UdpClient( ServerIEP_receive );
+				ServerIEP_send = new IPEndPoint( localIP, GetFirstAvailablePort() );//选取主服务器发送地址和端口
+				Server_send = udp2 = new UdpClient( ServerIEP_send );
 			}
 			/// <summary>
-			/// 发送游戏开始广播
+			/// 广播服务器地址
 			/// </summary>
 			public void sendStartBroadcast()
 			{
-				byte[] buff = Encoding.Unicode.GetBytes( GameServerBeginRunDeclare
-					+ ";My BroadcastIPEndPoint is;" + LocalIEP_receive.Address + ";" + LocalIEP_receive.Port
-					+ ";My GameServerIPEndPoint is;" + GameServerIEP_receive.Address
-					+ ";" + GameServerIEP_receive.Port );
-				//创建广播内容，包括广播服务器接收地址和游戏服务器节点地址
-				GameServerBroadcast.Send( buff, buff.Length, DeclareBroadcastAreaIEP );//向指定范围发送广播
+				byte[] buff = Encoding.Unicode.GetBytes( ServerBeginRunDeclare
+					+ ";BroadcastIPEndPoint;" + LocalIEP_receive.Address + ";" + LocalIEP_receive.Port
+					+ ";MainServerIPEndPoint;" + ServerIEP_receive.Address
+					+ ";" + ServerIEP_receive.Port );
+				//创建广播内容，包括广播服务器接收地址和主服务器节点地址
+				SendBroadcastServer.Send( buff, buff.Length, DeclareBroadcastAreaIEP );//向指定范围发送广播
 			}
 			/// <summary>
 			/// 广播服务器接收回应
@@ -108,10 +108,9 @@ namespace server
 			{
 				while ( true )
 				{
-					byte[] buff = GameServerBroadcastRecieve.Receive( ref ReceiveBroadcastAreaIEP );//接收响应数据
+					byte[] buff = RecieveBroadcastServer.Receive( ref ReceiveBroadcastAreaIEP );//接收响应数据
 					String message = Encoding.Unicode.GetString( buff );//字节流->字符串
 					String[] chips = message.Split( ';' );//拆分数据
-					Console.WriteLine( "BroadResponse: " + message );
 					if ( chips[0].Equals( Response ) )
 					{
 						return new IPEndPoint( IPAddress.Parse( chips[2] ), Int32.Parse( chips[3] ) );//返回读出的客户机地址
@@ -123,7 +122,7 @@ namespace server
 			{
 				while ( true )
 				{
-					byte[] buff = GameServer_receive.Receive( ref ReceiveBroadcastAreaIEP );
+					byte[] buff = Server_receive.Receive( ref ReceiveBroadcastAreaIEP );
 					String message = Encoding.Unicode.GetString( buff );//字节流->字符串
 					String[] chips = message.Split( ';' );//拆分数据
 					Console.WriteLine( message );
