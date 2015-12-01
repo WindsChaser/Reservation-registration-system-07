@@ -110,7 +110,8 @@ namespace server
 			connectSql( connection, getSource() );//如果连接池已满的话会等待连接池空缺时返回或者抛出超时异常
 			//balabala……
 			connection.Close();//关闭连接
-			commandCompleted( 0, null );//引发完成事件
+			if ( commandCompleted != null )
+				commandCompleted( 0, null );//引发完成事件
 		}
 
 		private void Insert()

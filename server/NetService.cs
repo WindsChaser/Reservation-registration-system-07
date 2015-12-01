@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections;
 using System.Net;
 using System.Net.NetworkInformation;
 using System.Net.Sockets;
@@ -18,8 +19,7 @@ namespace server
 		private IPEndPoint GameServer_send;//广播服务器发送端地址
 		private IPEndPoint GameServer_receive;//广播服务器接收端地址
 
-		private List<IPEndPoint> GameClientsBroadcastList;//在线用户广播地址表
-		public List<UdpClient> Clients;//在线用户连接表
+		private Dictionary<int, IPEndPoint> ClientList;//客户端列表
 
 		private UdpClient Server_receive;//接收主服务器
 		private UdpClient Server_send;//发送主服务器
@@ -66,8 +66,7 @@ namespace server
 		{
 			try
 			{
-				GameClientsBroadcastList = new List<IPEndPoint>();//客户端广播地址表
-				Clients = new List<UdpClient>();//客户端Udp连接
+				ClientList = new Dictionary<int, IPEndPoint>();
 				RequestList_receive = new Queue<String>();//请求接收队列
 				CommandList_send = new Queue<String>();//指令发送队列
 				broadcastServer = new BroadcastServer( ref Server_receive, ref Server_send );//广播服务器
@@ -92,7 +91,79 @@ namespace server
 				return false;
 			}
 		}
-
+		/// <summary>
+		/// 服务器开始处理消息队列
+		/// </summary>
+		public void StartMessageQueue_server()
+		{
+			RequestReceive_thread = new Thread( () =>
+			{
+				while ( true )
+				{
+					String str = ReceiveRequest();
+					lock ( RequestList_receive )
+					{
+						RequestList_receive.Enqueue( str );//操作消息队列时应当加锁
+					}
+					if ( NewRequest != null )
+						NewRequest();
+				}
+			} );
+			RequestReceive_thread.IsBackground = true;
+			RequestReceive_thread.Start();
+		}
+		/// <summary>
+		/// 将发送队列里的命令全部发出
+		/// 考虑到需要针对不同的客户端发送不同的消息，暂时废弃该方法
+		/// </summary>
+		//public void CommandSend_fun()
+		//{
+		//	lock ( CommandList_send )
+		//		while ( CommandList_send.Count > 0 )
+		//		{
+		//			String str;
+		//			str = CommandList_send.Dequeue();
+		//			SendGameCommand( str );
+		//		}
+		//}
+		/// <summary>
+		/// 向消息队列中添加新的命令并强制异步执行
+		/// </summary>
+		/// <param name="str"></param>
+		public void AddCommand(int id, String str )
+		{
+			lock ( CommandList_send )
+			{
+				//在这里对str进行处理，添加上id头
+				CommandList_send.Enqueue( str );
+			}
+			ThreadPool.QueueUserWorkItem( new WaitCallback( ( object state ) =>
+			{
+				String tmp;
+				lock ( CommandList_send )
+				{
+					//在这里对取出来的tmp进行处理，读出id头
+					tmp = CommandList_send.Dequeue();
+				}
+				SendCommand( ClientList[id], tmp );//通过用户id和IP端口字典读出发送的用户地址
+			} ), null );
+		}
+		public void SendCommand(IPEndPoint IEP,String command )
+		{
+			byte[] buff_send = Encoding.Unicode.GetBytes( command );
+			Server_send.Send( buff_send, buff_send.Length, IEP );
+		}
+		/// <summary>
+		/// 接收指定客户端的请求
+		/// </summary>
+		/// <param name="client"></param>
+		/// <returns></returns>
+		public String ReceiveRequest()
+		{
+			IPEndPoint remoteIEP = null;
+			byte[] buff_receive = Server_receive.Receive( ref remoteIEP );
+			return Encoding.Unicode.GetString( buff_receive );
+		}
 		#region 广播服务器类，用于提供服务器地址
 		public class BroadcastServer
 		{
