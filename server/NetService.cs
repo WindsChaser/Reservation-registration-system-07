@@ -11,29 +11,39 @@ namespace server
 	public class NetService:Service
 	{
 		public static IPAddress localIP;//本地IPv4地址
-		//public int PlayerCount;//玩家数目限制
-		//private int MessageLength = 256;
 		/// <summary>
 		/// 仅服务器端使用
 		/// </summary>
 		private BroadcastServer broadcastServer;//广播服务器
 		private IPEndPoint GameServer_send;//广播服务器发送端地址
 		private IPEndPoint GameServer_receive;//广播服务器接收端地址
-		private List<IPEndPoint> GameClientsBroadcastList;//在线玩家广播地址表
-		public List<UdpClient> Clients;//在线玩家连接表
-		private UdpClient Server_receive;//游戏接收服务器
-		private UdpClient Server_send;//游戏发送服务器
-		public Thread CreatGame_thread;//游戏创建线程
-		public Thread WaitClient_thread;//等待客户端线程
-		private Thread RequestReceive_thread;//游戏请求接收线程
-		public Queue<String> RequestList_receive;//游戏请求接收队列
-		private Queue<String> CommandList_send;//游戏指令发送队列
-		public delegate void NewRequestRecieve();//新的游戏请求
+
+		private List<IPEndPoint> GameClientsBroadcastList;//在线用户广播地址表
+		public List<UdpClient> Clients;//在线用户连接表
+
+		private UdpClient Server_receive;//接收主服务器
+		private UdpClient Server_send;//发送主服务器
+
+		public Thread ServerBroadcast_thread;//服务器地址广播线程
+		private Thread RequestReceive_thread;//请求接收线程
+
+		public Queue<String> RequestList_receive;//请求接收队列
+		private Queue<String> CommandList_send;//指令发送队列
+
+		public delegate void NewRequestRecieve();//新的请求
 		public event NewRequestRecieve NewRequest;//新请求到达事件
 		public delegate void NewClientConnection();//新的客户端连接
-		public event NewClientConnection NewClient;//新的客户端
+		public event NewClientConnection NewClient;//新的客户端事件
 
 		public NetService()
+		{
+			
+		}
+		/// <summary>
+		/// 初始化网络服务，获取本机地址
+		/// </summary>
+		/// <returns></returns>
+		public bool initService()
 		{
 			IPAddress[] ips = Dns.GetHostAddresses( Dns.GetHostName() );
 			//获取本地可用IPv4地址
@@ -45,9 +55,45 @@ namespace server
 					break;
 				}
 			}
+
+			return localIP != null;
+		}
+		/// <summary>
+		/// 启动网络服务，开始广播服务器地址
+		/// </summary>
+		/// <returns></returns>
+		public bool startService()
+		{
+			try
+			{
+				GameClientsBroadcastList = new List<IPEndPoint>();//客户端广播地址表
+				Clients = new List<UdpClient>();//客户端Udp连接
+				RequestList_receive = new Queue<String>();//请求接收队列
+				CommandList_send = new Queue<String>();//指令发送队列
+				broadcastServer = new BroadcastServer( ref Server_receive, ref Server_send );//广播服务器
+				GameServer_send = broadcastServer.LocalIEP_send;//广播服务器发送地址
+				GameServer_receive = broadcastServer.LocalIEP_receive;//广播服务器接收地址
+				ServerBroadcast_thread = new Thread( () =>
+				{
+					while ( true )
+					{
+						broadcastServer.sendStartBroadcast();
+						Thread.Sleep( 1000 );
+					}
+				} );//服务器发送广播
+				ServerBroadcast_thread.IsBackground = true;
+				ServerBroadcast_thread.Start();//服务器开始广播
+				return true;
+			}
+			catch ( Exception ex)
+			{
+
+				Console.WriteLine( ex.Message );
+				return false;
+			}
 		}
 
-		#region 服务器类
+		#region 广播服务器类，用于提供服务器地址
 		public class BroadcastServer
 		{
 			private UdpClient SendBroadcastServer;//广播发送服务器
@@ -102,38 +148,39 @@ namespace server
 			}
 			/// <summary>
 			/// 广播服务器接收回应
+			/// 下面两个方法已废弃。应当由客户端主动向主服务器发起登录请求再将其登记到在线列表。
 			/// </summary>
 			/// <returns></returns>
-			public IPEndPoint receiveResponse()
-			{
-				while ( true )
-				{
-					byte[] buff = RecieveBroadcastServer.Receive( ref ReceiveBroadcastAreaIEP );//接收响应数据
-					String message = Encoding.Unicode.GetString( buff );//字节流->字符串
-					String[] chips = message.Split( ';' );//拆分数据
-					if ( chips[0].Equals( Response ) )
-					{
-						return new IPEndPoint( IPAddress.Parse( chips[2] ), Int32.Parse( chips[3] ) );//返回读出的客户机地址
-					}
-				}
-			}
+			//public IPEndPoint receiveResponse()
+			//{
+			//	while ( true )
+			//	{
+			//		byte[] buff = RecieveBroadcastServer.Receive( ref ReceiveBroadcastAreaIEP );//接收响应数据
+			//		String message = Encoding.Unicode.GetString( buff );//字节流->字符串
+			//		String[] chips = message.Split( ';' );//拆分数据
+			//		if ( chips[0].Equals( Response ) )
+			//		{
+			//			return new IPEndPoint( IPAddress.Parse( chips[2] ), Int32.Parse( chips[3] ) );//返回读出的客户机地址
+			//		}
+			//	}
+			//}
 
-			public UdpClient getClient()
-			{
-				while ( true )
-				{
-					byte[] buff = Server_receive.Receive( ref ReceiveBroadcastAreaIEP );
-					String message = Encoding.Unicode.GetString( buff );//字节流->字符串
-					String[] chips = message.Split( ';' );//拆分数据
-					Console.WriteLine( message );
-					if ( chips[0].Equals( Response ) )
-					{
-						UdpClient udpclient = new UdpClient( new IPEndPoint( NetService.localIP, NetService.GetFirstAvailablePort() ) );
-						udpclient.Connect( new IPEndPoint( IPAddress.Parse( chips[1] ), Int32.Parse( chips[2] ) ) );
-						return udpclient;//返回客户端连接
-					}
-				}
-			}
+			//public UdpClient getClient()
+			//{
+			//	while ( true )
+			//	{
+			//		byte[] buff = Server_receive.Receive( ref ReceiveBroadcastAreaIEP );
+			//		String message = Encoding.Unicode.GetString( buff );//字节流->字符串
+			//		String[] chips = message.Split( ';' );//拆分数据
+			//		Console.WriteLine( message );
+			//		if ( chips[0].Equals( Response ) )
+			//		{
+			//			UdpClient udpclient = new UdpClient( new IPEndPoint( NetService.localIP, NetService.GetFirstAvailablePort() ) );
+			//			udpclient.Connect( new IPEndPoint( IPAddress.Parse( chips[1] ), Int32.Parse( chips[2] ) ) );
+			//			return udpclient;//返回客户端连接
+			//		}
+			//	}
+			//}
 		}
 		#endregion
 		#region port helper
