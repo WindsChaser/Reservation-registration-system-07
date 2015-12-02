@@ -19,7 +19,7 @@ namespace server
 		private IPEndPoint GameServer_send;//广播服务器发送端地址
 		private IPEndPoint GameServer_receive;//广播服务器接收端地址
 
-		private Dictionary<int, IPEndPoint> ClientList;//客户端列表
+		public Dictionary<int, IPEndPoint> ClientList;//客户端列表
 
 		private UdpClient Server_receive;//接收主服务器
 		private UdpClient Server_send;//发送主服务器
@@ -32,8 +32,8 @@ namespace server
 
 		public delegate void NewRequestRecieve();//新的请求
 		public event NewRequestRecieve NewRequest;//新请求到达事件
-		public delegate void NewClientConnection();//新的客户端连接
-		public event NewClientConnection NewClient;//新的客户端事件
+		//public delegate void NewClientConnection();//新的客户端连接
+		//public event NewClientConnection NewClient;//新的客户端事件
 
 		public NetService()
 		{
@@ -163,6 +163,27 @@ namespace server
 			IPEndPoint remoteIEP = null;
 			byte[] buff_receive = Server_receive.Receive( ref remoteIEP );
 			return Encoding.Unicode.GetString( buff_receive );
+		}
+		/// <summary>
+		/// 从请求队列中取出一条消息
+		/// </summary>
+		public String GetMessage()
+		{
+			String tmp;
+			try
+			{
+				lock ( RequestList_receive )
+				{
+					tmp = RequestList_receive.Dequeue();
+				}
+				return tmp;
+			}
+			catch ( Exception ex )
+			{
+				Console.WriteLine( OperationTips.errRequestList );
+				Console.WriteLine( ex.Message );
+				return null;
+			}
 		}
 		#region 广播服务器类，用于提供服务器地址
 		public class BroadcastServer

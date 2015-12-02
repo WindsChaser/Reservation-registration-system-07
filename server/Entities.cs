@@ -82,5 +82,6 @@ namespace server
 	{
 		public static String reOpenDB = "系统基础数据库已连接！请勿重复连接";
 		public static String errOpenDB = "系统基础数据库连接失败！";
+		public static String errRequestList = "对消息队列进行了错误的操作！";
 	}
 }

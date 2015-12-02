@@ -16,8 +16,8 @@ namespace server
 		private SqlConnection sqlConnection;//基础数据库连接
 		private int TimeOut;//连接超时时间
 		private int MaxPoolSize;//最大连接池数量
-		public delegate void CommandCompleted(int id,String ret);//指令完成委托,包含指令的id和返回值
-		public event CommandCompleted commandCompleted;//指令完成时引发的事件,在主服务里监听该事件即可在引发事件时做出响应
+		//public delegate void CommandCompleted(int id,Object ret);//指令完成委托,包含指令的id和返回值
+		//public event CommandCompleted commandCompleted;//指令完成时引发的事件,在主服务里监听该事件即可在引发事件时做出响应
 
 		public DBService()
 		{
@@ -88,30 +88,23 @@ namespace server
 			return new SqlConnection();//返回一个新的连接
 		}
 
-		public void addNewRequest( String command )
+		public Object addNewRequest( String command )
 		{
 			//如果已经停止或者关闭服务，拒绝响应
 			if ( state != State.Running )
-				return;
+				return null;
 
 			//拆分command的内容，根据命令类型执行不同的操作
-			ThreadPool.QueueUserWorkItem(new WaitCallback( ( object state ) =>
-			{
-				//将请求放入线程池执行
-				//这之前方法体里定义的变量都可以直接使用，所以无需传入参数
-				//command里应该包括请求的id号，完成请求后引发一个自定义事件通知MainService
-			} ), null );
+			return null;
 		}
 
 		private void Query()
 		{
-			//参数列表和具体操作由你们想
+			//参数列表、返回值和具体操作由你们想
 			SqlConnection connection = getNewConnection();//直接创建一个新的连接
 			connectSql( connection, getSource() );//如果连接池已满的话会等待连接池空缺时返回或者抛出超时异常
 			//balabala……
 			connection.Close();//关闭连接
-			if ( commandCompleted != null )
-				commandCompleted( 0, null );//引发完成事件
 		}
 
 		private void Insert()
