@@ -12,7 +12,6 @@ namespace server
 {
 	public class DBService : Service
 	{
-		public State state;//服务状态
 		private SqlConnection sqlConnection;//基础数据库连接
 		private int TimeOut;//连接超时时间
 		private int MaxPoolSize;//最大连接池数量

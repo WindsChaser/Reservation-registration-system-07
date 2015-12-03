@@ -40,11 +40,13 @@ namespace server
 			
 		}
 		/// <summary>
-		/// 初始化网络服务，获取本机地址
+		/// 初始化网络服务，获取本机地址，开始广播服务器地址
 		/// </summary>
 		/// <returns></returns>
 		public bool initService()
 		{
+			//获取本机地址
+			#region
 			IPAddress[] ips = Dns.GetHostAddresses( Dns.GetHostName() );
 			//获取本地可用IPv4地址
 			foreach ( IPAddress ipa in ips )
@@ -55,15 +57,9 @@ namespace server
 					break;
 				}
 			}
-
-			return localIP != null;
-		}
-		/// <summary>
-		/// 启动网络服务，开始广播服务器地址
-		/// </summary>
-		/// <returns></returns>
-		public bool startService()
-		{
+			#endregion
+			//广播服务器地址
+			#region
 			try
 			{
 				ClientList = new Dictionary<int, IPEndPoint>();
@@ -82,14 +78,54 @@ namespace server
 				} );//服务器发送广播
 				ServerBroadcast_thread.IsBackground = true;
 				ServerBroadcast_thread.Start();//服务器开始广播
-				return true;
+				state = State.Suspend;
 			}
-			catch ( Exception ex)
+			catch ( Exception ex )
 			{
 
 				Console.WriteLine( ex.Message );
 				return false;
 			}
+			#endregion
+			return localIP != null;
+		}
+		/// <summary>
+		/// 启动网络服务，开始接收消息队列
+		/// </summary>
+		/// <returns></returns>
+		public bool startService()
+		{
+			try
+			{
+				StartMessageQueue_server();
+				state = State.Running;
+				return true;
+			}
+			catch ( Exception ex )
+			{
+				Console.WriteLine( ex.Message );
+				return false;
+			}
+		}
+		/// <summary>
+		/// 暂停服务，标记为挂起状态
+		/// </summary>
+		/// <returns></returns>
+		public bool stopService()
+		{
+			state = State.Suspend;
+			return true;
+		}
+		/// <summary>
+		/// 关闭服务
+		/// </summary>
+		/// <returns></returns>
+		public bool closeService()
+		{
+			ServerBroadcast_thread.Abort();
+			RequestReceive_thread.Abort();
+			state = State.Close;
+			return true;
 		}
 		/// <summary>
 		/// 服务器开始处理消息队列

@@ -17,24 +17,29 @@ namespace server
 
 	public abstract class Service
 	{
+		public State state;
 		public bool initService()
 		{
-			return false;
+			state = State.Suspend;
+			return true;
 		}
 
 		public bool startService()
 		{
-			return false;
+			state = State.Running;
+			return true;
 		}
 
 		public bool stopService()
 		{
-			return false;
+			state = State.Suspend;
+			return true;
 		}
 
 		public bool closeService()
 		{
-			return false;
+			state = State.Close;
+			return true;
 		}
 	}
 	#endregion
