@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections;
 using System.Net;
 using System.Net.NetworkInformation;
 using System.Net.Sockets;
@@ -11,6 +10,7 @@ namespace server
 {
 	public class NetService:Service
 	{
+		#region 字段声明
 		public static IPAddress localIP;//本地IPv4地址
 		/// <summary>
 		/// 仅服务器端使用
@@ -32,9 +32,9 @@ namespace server
 
 		public delegate void NewRequestRecieve();//新的请求
 		public event NewRequestRecieve NewRequest;//新请求到达事件
-		//public delegate void NewClientConnection();//新的客户端连接
-		//public event NewClientConnection NewClient;//新的客户端事件
-
+												  //public delegate void NewClientConnection();//新的客户端连接
+												  //public event NewClientConnection NewClient;//新的客户端事件
+		#endregion
 		public NetService()
 		{
 			
@@ -226,11 +226,11 @@ namespace server
 		{
 			private UdpClient SendBroadcastServer;//广播发送服务器
 			private IPEndPoint DeclareBroadcastAreaIEP;//广播地址段
-			public IPEndPoint LocalIEP_send;//本机发送IP节点
+			private IPEndPoint LocalIEP_send;//本机发送IP节点
 
 			private UdpClient RecieveBroadcastServer;//广播接收服务器
 			private IPEndPoint ReceiveBroadcastAreaIEP;//接收地址段
-			public IPEndPoint LocalIEP_receive;//本机接收IP节点
+			private IPEndPoint LocalIEP_receive;//本机接收IP节点
 
 			public IPEndPoint ServerIEP_receive;//主服务器接收节点
 			public IPEndPoint ServerIEP_send;//主服务器发送节点
