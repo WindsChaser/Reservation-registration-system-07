@@ -226,11 +226,11 @@ namespace server
 		{
 			private UdpClient SendBroadcastServer;//广播发送服务器
 			private IPEndPoint DeclareBroadcastAreaIEP;//广播地址段
-			private IPEndPoint LocalIEP_send;//本机发送IP节点
+			public IPEndPoint LocalIEP_send;//本机发送IP节点
 
 			private UdpClient RecieveBroadcastServer;//广播接收服务器
 			private IPEndPoint ReceiveBroadcastAreaIEP;//接收地址段
-			private IPEndPoint LocalIEP_receive;//本机接收IP节点
+			public IPEndPoint LocalIEP_receive;//本机接收IP节点
 
 			public IPEndPoint ServerIEP_receive;//主服务器接收节点
 			public IPEndPoint ServerIEP_send;//主服务器发送节点

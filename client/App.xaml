@@ -4,6 +4,8 @@
              xmlns:local="clr-namespace:client"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+
+        <Color x:Key="MainColorSytle">#FF3A94BD</Color>
+
     </Application.Resources>
 </Application>
