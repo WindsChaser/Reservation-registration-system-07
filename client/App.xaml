@@ -5,7 +5,7 @@
              StartupUri="MainWindow.xaml">
     <Application.Resources>
 
-        <Color x:Key="MainColorSytle">#FF3A94BD</Color>
+        <Color x:Key="MainColorSytle">#FF1B80AE</Color>
 
     </Application.Resources>
 </Application>

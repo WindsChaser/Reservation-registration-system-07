@@ -1,17 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using System.Windows.Media.Animation;
+using System.Windows.Threading;
 
 namespace client
 {
@@ -25,6 +18,18 @@ namespace client
 		public MainWindow()
 		{
 			InitializeComponent();
+			this.BeginAnimation( HeightProperty, new DoubleAnimation( 600, new Duration( TimeSpan.FromMilliseconds( 1200 ) ) ,FillBehavior.Stop)
+			{
+				EasingFunction = new ExponentialEase() { EasingMode = EasingMode.EaseOut, Exponent = -5 }
+			} );
+			var DateTimer = new DispatcherTimer() { Interval = TimeSpan.FromSeconds( 1 ) };
+			DateTimer.Tick += ( object sender, EventArgs e ) =>
+			{
+				DateTime datetime = DateTime.Now;
+				dateLabel.Content = datetime.ToString( "D" );
+				timeLabel.Content = datetime.ToString( "HH:mm:ss" );
+			};
+			DateTimer.Start();
 		}
 
 		private void BackToDefaultBackground( object sender, MouseEventArgs e )
@@ -98,6 +103,21 @@ namespace client
 				this.WindowState = System.Windows.WindowState.Normal;
 				ResizeToMax( null, null );
 			}
+		}
+
+		private void ChangeTextColor( object sender, MouseEventArgs e )
+		{
+			( (Label)sender ).Foreground = new SolidColorBrush(Color.FromArgb(255,20,135,165));
+		}
+
+		private void ReturnTextColor( object sender, MouseEventArgs e )
+		{
+			( (Label)sender ).Foreground = new SolidColorBrush( Color.FromArgb( 204, 255, 255, 255 ) );
+		}
+
+		private void LoadPage( object sender, MouseButtonEventArgs e )
+		{
+
 		}
 	}
 }

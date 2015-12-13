@@ -8,46 +8,104 @@
         Title="预约挂号系统 ver1.0" Height="600" Width="800" BorderThickness="10" SnapsToDevicePixels="True" Foreground="{x:Null}" AllowsTransparency="True" WindowStyle="None" OpacityMask="#FFBFDEEC" StateChanged="StateChange" SizeChanged="SizeChange">
     <Window.Background>
         <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-            <GradientStop Color="#CCFFFFFF" Offset="1"/>
-            <GradientStop Color="#FF3A94BD" Offset="0.5"/>
+            <GradientStop Offset="1" Color="#CCFFFFFF"/>
+            <GradientStop Color="{DynamicResource MainColorSytle}" Offset="0"/>
         </LinearGradientBrush>
     </Window.Background>
     <Window.Effect>
         <DropShadowEffect ShadowDepth="1" BlurRadius="6" Direction="270" Opacity="0.75" Color="#FF211613"/>
     </Window.Effect>
+    <Window.Resources>
+        <Style x:Key="items_left" TargetType="Label">
+            <Setter Property="FontFamily" Value="YouYuan"/>
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Foreground" Value="#CCFFFFFF"/>
+            <Setter Property="Background" Value="#02FFFFFF"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Trigger.Setters>
+                        <Setter Property="Foreground" Value="#FF1487A5"/>
+                    </Trigger.Setters>
+                </Trigger>
+                <Trigger Property="IsMouseOver" Value="False">
+                    <Trigger.Setters>
+                        <Setter Property="Foreground" Value="#CCFFFFFF"/>
+                    </Trigger.Setters>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
     <Grid>
-        <!--蒙版层，尽可能实现毛玻璃效果-->
-        <Canvas Name="canvas">
-            <Canvas.Effect>
-                <BlurEffect Radius="15"/>
-            </Canvas.Effect>
-        </Canvas>
-        <Grid>
-            <DockPanel Height="25" VerticalAlignment="Top">
-                <StackPanel DockPanel.Dock="Right" HorizontalAlignment="Right" Height="25" VerticalAlignment="Top" Orientation="Horizontal" SnapsToDevicePixels="False">
-                    <Canvas Width="25" Margin="0,0,5,0" MouseEnter="ChangeBackground" MouseLeave="BackToDefaultBackground">
-                        <Image x:Name="image" MouseLeftButtonDown="WindowDrag" HorizontalAlignment="Center" VerticalAlignment="Center" Width="15" Height="15" Panel.ZIndex="5" Canvas.Left="5" Canvas.Top="5" Source="Resources/menu_mask.png"/>
-                    </Canvas>
-                    <Canvas Width="25" Margin="0,0,5,0" MouseEnter="ChangeBackground" MouseLeave="BackToDefaultBackground" MouseLeftButtonUp="ResizeToMin">
-                        <Image x:Name="image1" Width="15" Height="15" Canvas.Left="5" Canvas.Top="5" HorizontalAlignment="Center" VerticalAlignment="Center" Source="Resources/min_mask.png"/>
-                    </Canvas>
-                    <Canvas Width="25" Margin="0,0,5,0" MouseEnter="ChangeBackground" MouseLeave="BackToDefaultBackground" MouseLeftButtonUp="ResizeToMax">
-                        <Image x:Name="image2" Width="25" Height="25" Canvas.Left="0" Canvas.Top="0" HorizontalAlignment="Center" VerticalAlignment="Center" Source="Resources/max_mask.png"/>
-                    </Canvas>
-                    <Canvas Width="25" MouseEnter="ChangeBackground" MouseLeave="BackToDefaultBackground">
-                        <Image x:Name="image3" Width="15" Height="15" Canvas.Left="5" Canvas.Top="5" HorizontalAlignment="Center" VerticalAlignment="Center" Source="Resources/close_mask.png" MouseUp="CloseWindow"/>
-                    </Canvas>
-                </StackPanel>
-                <WrapPanel DockPanel.Dock="Left" MouseLeftButtonDown="WindowDrag">
-                    <WrapPanel.Background>
-                        <SolidColorBrush Color="{DynamicResource MainColorSytle}"/>
-                    </WrapPanel.Background>
-                    <Image Width="25" Height="25" Margin="0,0,5,0">
+        <DockPanel Height="25" VerticalAlignment="Top">
+            <StackPanel DockPanel.Dock="Right" HorizontalAlignment="Right" Height="25" VerticalAlignment="Top" Orientation="Horizontal" SnapsToDevicePixels="False">
+                <Canvas Width="25" Margin="0,0,5,0" MouseEnter="ChangeBackground" MouseLeave="BackToDefaultBackground">
+                    <Image x:Name="image" MouseLeftButtonDown="WindowDrag" HorizontalAlignment="Center" VerticalAlignment="Center" Width="15" Height="15" Panel.ZIndex="5" Canvas.Left="5" Canvas.Top="5" Source="Resources/menu_mask.png"/>
+                </Canvas>
+                <Canvas Width="25" Margin="0,0,5,0" MouseEnter="ChangeBackground" MouseLeave="BackToDefaultBackground" MouseLeftButtonUp="ResizeToMin">
+                    <Image x:Name="image1" Width="15" Height="15" Canvas.Left="5" Canvas.Top="5" HorizontalAlignment="Center" VerticalAlignment="Center" Source="Resources/min_mask.png"/>
+                </Canvas>
+                <Canvas Width="25" Margin="0,0,5,0" MouseEnter="ChangeBackground" MouseLeave="BackToDefaultBackground" MouseLeftButtonUp="ResizeToMax">
+                    <Image x:Name="image2" Width="25" Height="25" Canvas.Left="0" Canvas.Top="0" HorizontalAlignment="Center" VerticalAlignment="Center" Source="Resources/max_mask.png"/>
+                </Canvas>
+                <Canvas Width="25" MouseEnter="ChangeBackground" MouseLeave="BackToDefaultBackground">
+                    <Image x:Name="image3" Width="15" Height="15" Canvas.Left="5" Canvas.Top="5" HorizontalAlignment="Center" VerticalAlignment="Center" Source="Resources/close_mask.png" MouseUp="CloseWindow"/>
+                </Canvas>
+            </StackPanel>
+            <WrapPanel DockPanel.Dock="Left" MouseLeftButtonDown="WindowDrag">
+                <WrapPanel.Background>
+                    <SolidColorBrush Color="#02FFFFFF"/>
+                </WrapPanel.Background>
+                <Image Width="25" Height="25" Margin="0,0,5,0">
 
-                    </Image>
-                    <Label Content="预约挂号系统 ver1.1" FontSize="13.333" Foreground="White"/>
-                </WrapPanel>
-            </DockPanel>
-        </Grid>
+                </Image>
+                <Label Content="预约挂号系统 ver1.1" FontSize="13.333" Foreground="White"/>
+            </WrapPanel>
+        </DockPanel>
+        <Border Height="100" Margin="25,40,25,0" BorderThickness="2" CornerRadius="8" VerticalAlignment="Top">
+            <Border.BorderBrush>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="#7F097B95" Offset="0"/>
+                    <GradientStop Color="#7F2383A8" Offset="1"/>
+                </LinearGradientBrush>
+            </Border.BorderBrush>
+            <Grid>
+                <StackPanel Orientation="Horizontal">
+                    <Label Name="usernameLabel" Content="尊敬的用户" FontSize="48" Foreground="#CCFFFFFF" FontFamily="YouYuan" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontWeight="Bold" HorizontalAlignment="Left" Margin="5,0,5,0"/>
+                    <Label Name="tipLabel" Content=",晚上好" FontSize="20" FontFamily="YouYuan" Foreground="#CCFFFFFF" FontWeight="Bold" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="0,30,0,0"/>
+                </StackPanel>
+                <Label Name="dateLabel" Content="2015/12/12" FontSize="20" Foreground="#CCFFFFFF" Margin="0,10,10,49" HorizontalAlignment="Right" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                <Label Name="timeLabel" Content="23:33:33" FontSize="28" Foreground="#CCFFFFFF" Margin="0,45,10,10" HorizontalAlignment="Right" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Width="121"/>
+            </Grid>
+        </Border>
+        <DockPanel Margin="25,164,25,10">
+            <Border DockPanel.Dock="Left" BorderThickness="3" CornerRadius="10" HorizontalAlignment="Left">
+                <Border.BorderBrush>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <GradientStop Color="#991B80AE" Offset="0"/>
+                        <GradientStop Offset="1"/>
+                    </LinearGradientBrush>
+                </Border.BorderBrush>
+                <StackPanel>
+                    <Label Content="个人信息" Style="{StaticResource items_left}"  Margin="10,0" MouseLeftButtonUp="LoadPage"/>
+                    <Label Content="查询科室信息" Style="{StaticResource items_left}" Margin="10,0" MouseLeftButtonUp="LoadPage"/>
+                    <Label Content="查询已有预约" Style="{StaticResource items_left}" Margin="10,0" MouseLeftButtonUp="LoadPage"/>
+                    <Label Content="预约挂号" Style="{StaticResource items_left}" Margin="10,0" MouseLeftButtonUp="LoadPage"/>
+                </StackPanel>
+            </Border>
+            <Border Margin="10,0,0,0" DockPanel.Dock="Right" BorderThickness="1" CornerRadius="10">
+                <Border.BorderBrush>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <GradientStop Color="#991B80AE" Offset="0"/>
+                        <GradientStop Offset="1"/>
+                    </LinearGradientBrush>
+                </Border.BorderBrush>
+                <Frame Source="/client;component/Resources/Page_UserInfo.xaml" NavigationUIVisibility="Hidden">
+
+                </Frame>
+            </Border>
+        </DockPanel>
     </Grid>
 </Window>
