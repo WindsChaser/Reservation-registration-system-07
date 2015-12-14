@@ -50,6 +50,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="presentationframework.aero2" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -71,8 +72,17 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Resources\blank.xaml.cs">
+      <DependentUpon>blank.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\MyTextBlock.xaml.cs">
+      <DependentUpon>MyTextBlock.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Resources\Page_CommonInfo.xaml.cs">
       <DependentUpon>Page_CommonInfo.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Page_OrderInfo.xaml.cs">
+      <DependentUpon>Page_OrderInfo.xaml</DependentUpon>
     </Compile>
     <Compile Include="Resources\Page_UserInfo.xaml.cs">
       <DependentUpon>Page_UserInfo.xaml</DependentUpon>
@@ -90,7 +100,19 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Resources\blank.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\MyTextBlock.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Resources\Page_CommonInfo.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\Page_OrderInfo.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

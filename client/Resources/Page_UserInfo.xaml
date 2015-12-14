@@ -1,21 +1,22 @@
-﻿<Grid x:Class="client.Resources.Page_UserInfo"
+﻿<Page x:Class="client.Resources.Page_UserInfo"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:client.Resources"
       mc:Ignorable="d" 
-      d:DesignHeight="406" d:DesignWidth="562">
+      KeepAlive="True"
+      d:DesignHeight="406" d:DesignWidth="562" SnapsToDevicePixels="True">
 
-    <Grid.Resources>
+    <Page.Resources>
         <Style x:Key="mainframe" TargetType="Label">
             <Setter Property="FontFamily" Value="YouYuan"/>
             <Setter Property="FontSize" Value="18"/>
             <Setter Property="FontWeight" Value="Bold"/>
             <Setter Property="Foreground" Value="#CCFFFFFF"/>
         </Style>
-    </Grid.Resources>
-    <StackPanel Margin="40">
+    </Page.Resources>
+    <StackPanel Margin="35">
             <WrapPanel>
                 <Label Style="{StaticResource mainframe}" Content="姓名： "/>
             <Label Style="{StaticResource mainframe}" Name="name" Content="唐思渊是傻逼"/>
@@ -49,4 +50,4 @@
             <Label Style="{StaticResource mainframe}" Name="retimes_all" Content="23333"/>
             </WrapPanel>
         </StackPanel>
-</Grid>
+</Page>

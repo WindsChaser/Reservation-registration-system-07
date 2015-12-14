@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace client.Resources
 {
 	/// <summary>
-	/// Page_UserInfo.xaml 的交互逻辑
+	/// MyTextBlock.xaml 的交互逻辑
 	/// </summary>
-	public partial class Page_UserInfo : Page
+	public partial class MyTextBlock : UserControl
 	{
-		public Page_UserInfo()
+		public MyTextBlock()
 		{
 			InitializeComponent();
 		}

@@ -1,11 +1,65 @@
-﻿<Grid x:Class="client.Resources.Page_CommonInfo"
+﻿<Page x:Class="client.Resources.Page_CommonInfo"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:client.Resources"
       mc:Ignorable="d" 
+      KeepAlive="True"
       d:DesignHeight="400" d:DesignWidth="560"
       >
-    
-</Grid>
+    <Page.Resources>
+        <Style x:Key="mainframe" TargetType="{x:Type ComboBoxItem}">
+            <Setter Property="FontFamily" Value="YouYuan"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="Foreground" Value="#CCFFFFFF"/>
+            <Setter Property="Margin" Value="0,0,0,0"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Foreground" Value="#CCFFFFFF"/>
+                    <Setter Property="Background">
+                        <Setter.Value>
+                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                <GradientStop Color="#CC0676AA" Offset="0"/>
+                                <GradientStop Color="#CC0CB4CF" Offset="0.5"/>
+                                <GradientStop Color="#CC0D79AA" Offset="1"/>
+                            </LinearGradientBrush>
+                        </Setter.Value>
+                    </Setter>
+                </Trigger>
+                <Trigger Property="IsMouseOver" Value="False">
+                    <Setter Property="Foreground" Value="#99000000"/>
+                    <Setter Property="Background">
+                        <Setter.Value>
+                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                <GradientStop Color="#FFD8D8D8" Offset="0"/>
+                                <GradientStop Color="#FFE0E0E0" Offset="1"/>
+                                <GradientStop Color="White" Offset="0.5"/>
+                            </LinearGradientBrush>
+                        </Setter.Value>
+                    </Setter>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Page.Resources>
+    <Grid>
+        <StackPanel Margin="0,30,0,0" Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Left">
+            <ComboBox Width="200" Height="30" Margin="30,0,0,0" BorderBrush="{x:Null}" Foreground="#CCFFFFFF" FontSize="20" FontFamily="YouYuan" FontWeight="Bold" VerticalContentAlignment="Center" Template="{DynamicResource MyComboBoxControlTemplate}" >
+                <ComboBoxItem Style="{StaticResource mainframe}" Content="测试" Template="{DynamicResource MyComboBoxItemControlTemplate}"/>
+                <ComboBoxItem Style="{StaticResource mainframe}" Content="呵呵" Template="{DynamicResource MyComboBoxItemControlTemplate}"/>
+            </ComboBox>
+            <ComboBox Margin="30,0,0,0" Width="120" Foreground="#CCFFFFFF" FontSize="20" FontFamily="YouYuan" FontWeight="Bold" Template="{DynamicResource MyComboBoxControlTemplate}">
+                <ComboBoxItem Style="{StaticResource mainframe}" Content="测试" Template="{DynamicResource MyComboBoxItemControlTemplate}"/>
+                <ComboBoxItem Style="{StaticResource mainframe}" Content="呵呵" Template="{DynamicResource MyComboBoxItemControlTemplate}"/>
+            </ComboBox>
+            <ComboBox Margin="30,0" Width="120" Foreground="#CCFFFFFF" FontSize="20" FontFamily="YouYuan" FontWeight="Bold" Template="{DynamicResource MyComboBoxControlTemplate}">
+                <ComboBoxItem Style="{StaticResource mainframe}" Content="测试" Template="{DynamicResource MyComboBoxItemControlTemplate}"/>
+                <ComboBoxItem Style="{StaticResource mainframe}" Content="呵呵" Template="{DynamicResource MyComboBoxItemControlTemplate}"/>
+            </ComboBox>
+        </StackPanel>
+        <StackPanel Margin="30,98,10,10">
+            <Label Content="测试内容" FontFamily="YouYuan" FontSize="20" Foreground="#CCFFFFFF" FontWeight="Bold" HorizontalAlignment="Left" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+        </StackPanel>
+    </Grid>
+</Page>

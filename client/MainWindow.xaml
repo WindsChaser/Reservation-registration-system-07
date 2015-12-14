@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:client"
         mc:Ignorable="d"
-        Title="预约挂号系统 ver1.0" Height="600" Width="800" BorderThickness="10" SnapsToDevicePixels="True" Foreground="{x:Null}" AllowsTransparency="True" WindowStyle="None" OpacityMask="#FFBFDEEC" StateChanged="StateChange" SizeChanged="SizeChange">
+        Title="预约挂号系统 ver1.0" Height="50" Width="800" BorderThickness="10" SnapsToDevicePixels="True" Foreground="{x:Null}" AllowsTransparency="True" WindowStyle="None" OpacityMask="#FFBFDEEC" StateChanged="StateChange" SizeChanged="SizeChange">
     <Window.Background>
         <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
             <GradientStop Offset="1" Color="#CCFFFFFF"/>
@@ -89,10 +89,10 @@
                     </LinearGradientBrush>
                 </Border.BorderBrush>
                 <StackPanel>
-                    <Label Content="个人信息" Style="{StaticResource items_left}"  Margin="10,0" MouseLeftButtonUp="LoadPage"/>
-                    <Label Content="查询科室信息" Style="{StaticResource items_left}" Margin="10,0" MouseLeftButtonUp="LoadPage"/>
-                    <Label Content="查询已有预约" Style="{StaticResource items_left}" Margin="10,0" MouseLeftButtonUp="LoadPage"/>
-                    <Label Content="预约挂号" Style="{StaticResource items_left}" Margin="10,0" MouseLeftButtonUp="LoadPage"/>
+                    <Label Name="p1_t" Content="个人信息" Style="{StaticResource items_left}"  Margin="10,0" MouseLeftButtonUp="LoadPage"/>
+                    <Label Name="p2_t" Content="查询科室信息" Style="{StaticResource items_left}" Margin="10,0" MouseLeftButtonUp="LoadPage"/>
+                    <Label Name="p3_t" Content="查询已有预约" Style="{StaticResource items_left}" Margin="10,0" MouseLeftButtonUp="LoadPage"/>
+                    <Label Name="p4_t" Content="预约挂号" Style="{StaticResource items_left}" Margin="10,0" MouseLeftButtonUp="LoadPage"/>
                 </StackPanel>
             </Border>
             <Border Margin="10,0,0,0" DockPanel.Dock="Right" BorderThickness="1" CornerRadius="10">
@@ -102,9 +102,7 @@
                         <GradientStop Offset="1"/>
                     </LinearGradientBrush>
                 </Border.BorderBrush>
-                <Frame Source="/client;component/Resources/Page_UserInfo.xaml" NavigationUIVisibility="Hidden">
-
-                </Frame>
+                <Frame Name="frame" NavigationUIVisibility="Hidden" Source="/client;component/Resources/blank.xaml"/>
             </Border>
         </DockPanel>
     </Grid>

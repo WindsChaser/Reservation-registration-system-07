@@ -5,6 +5,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Threading;
+using client.Resources;
 
 namespace client
 {
@@ -15,6 +16,7 @@ namespace client
 	{
 		Rect NormalRect;
 		Rect workAera = SystemParameters.WorkArea;
+		Page page1, page2, page3, page4;
 		public MainWindow()
 		{
 			InitializeComponent();
@@ -117,7 +119,32 @@ namespace client
 
 		private void LoadPage( object sender, MouseButtonEventArgs e )
 		{
+			DoubleAnimation animation = new DoubleAnimation(1, 0, new Duration( TimeSpan.FromMilliseconds( 400 ) ), FillBehavior.Stop );
+			animation.Completed += (object se,EventArgs ea) =>
+			{
+				string tmp = ( (Label)sender ).Name;
+				if ( tmp.Equals( "p1_t" ) )
+				{
+					if ( page1 == null )
+						page1 = new Page_UserInfo();
+					frame.Navigate( page1 );
+				}
+				else if ( tmp.Equals( "p2_t" ) )
+				{
+					if ( page2 == null )
+						page2 = new Page_CommonInfo();
+					frame.Navigate( page2 );
+				}
+				else if ( tmp.Equals( "p3_t" ) )
+				{
+					if ( page3 == null )
+						page3 = new Page_OrderInfo();
+					frame.Navigate( page3 );
+				}
 
+				frame.BeginAnimation( Frame.OpacityProperty, new DoubleAnimation(0, 1, new Duration( TimeSpan.FromMilliseconds( 400 ) ), FillBehavior.Stop ));
+			};
+            frame.BeginAnimation(Frame.OpacityProperty, animation);
 		}
 	}
 }

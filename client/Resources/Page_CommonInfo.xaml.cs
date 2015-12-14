@@ -18,7 +18,7 @@ namespace client.Resources
 	/// <summary>
 	/// Page_CommonInfo.xaml 的交互逻辑
 	/// </summary>
-	public partial class Page_CommonInfo : Grid
+	public partial class Page_CommonInfo : Page
 	{
 		public Page_CommonInfo()
 		{
