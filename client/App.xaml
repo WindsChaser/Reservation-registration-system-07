@@ -7,6 +7,7 @@
     <Application.Resources>
 
         <Color x:Key="MainColorSytle">#FF1B80AE</Color>
+        
 
         <ControlTemplate x:Key="MyComboBoxControlTemplate" TargetType="{x:Type ComboBox}">
             <Grid x:Name="templateRoot" SnapsToDevicePixels="True" UseLayoutRounding="True" d:DesignUseLayoutRounding="True">

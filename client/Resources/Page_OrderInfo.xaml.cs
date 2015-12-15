@@ -24,6 +24,10 @@ namespace client.Resources
 		public Page_OrderInfo()
 		{
 			InitializeComponent();
+			t1.state.Style = (Style)FindResource( "state_payed" );
+			t2.state.Style = (Style)FindResource( "state_finished" );
+			t3.state.Style = (Style)FindResource( "state_payed" );
+			t4.state.Style = (Style)FindResource( "state_unpayed" );
 		}
 
 		private void chooseItem( object sender, MouseButtonEventArgs e )

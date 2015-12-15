@@ -87,6 +87,9 @@
     <Compile Include="Resources\Page_UserInfo.xaml.cs">
       <DependentUpon>Page_UserInfo.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Resources\Regist.xaml.cs">
+      <DependentUpon>Regist.xaml</DependentUpon>
+    </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -117,6 +120,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Resources\Page_UserInfo.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\Regist.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

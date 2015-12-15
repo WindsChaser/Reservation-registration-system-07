@@ -9,6 +9,17 @@
       d:DesignHeight="400" d:DesignWidth="560"
       >
     <Page.Resources>
+        <Style x:Key="button" TargetType="Button">
+            <Setter Property="FontFamily" Value="YouYuan"/>
+            <Setter Property="FontSize" Value="15"/>
+            <Setter Property="Foreground" Value="#CC000000"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+        </Style>
+        <Style x:Key="datepicker" TargetType="DatePicker">
+            <Setter Property="FontFamily" Value="YouYuan"/>
+            <Setter Property="FontSize" Value="15"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+        </Style>
         <Style x:Key="mainframe" TargetType="{x:Type ComboBoxItem}">
             <Setter Property="FontFamily" Value="YouYuan"/>
             <Setter Property="FontWeight" Value="Bold"/>
@@ -53,7 +64,7 @@
                 <ComboBoxItem Style="{StaticResource mainframe}" Content="测试" Template="{DynamicResource MyComboBoxItemControlTemplate}"/>
                 <ComboBoxItem Style="{StaticResource mainframe}" Content="呵呵" Template="{DynamicResource MyComboBoxItemControlTemplate}"/>
             </ComboBox>
-            <ComboBox Margin="30,0" Width="120" Foreground="#CCFFFFFF" FontSize="20" FontFamily="YouYuan" FontWeight="Bold" Template="{DynamicResource MyComboBoxControlTemplate}">
+            <ComboBox Margin="30,0,0,0" Width="120" Foreground="#CCFFFFFF" FontSize="20" FontFamily="YouYuan" FontWeight="Bold" Template="{DynamicResource MyComboBoxControlTemplate}">
                 <ComboBoxItem Style="{StaticResource mainframe}" Content="测试" Template="{DynamicResource MyComboBoxItemControlTemplate}"/>
                 <ComboBoxItem Style="{StaticResource mainframe}" Content="呵呵" Template="{DynamicResource MyComboBoxItemControlTemplate}"/>
             </ComboBox>
@@ -61,5 +72,7 @@
         <StackPanel Margin="30,98,10,10">
             <Label Content="测试内容" FontFamily="YouYuan" FontSize="20" Foreground="#CCFFFFFF" FontWeight="Bold" HorizontalAlignment="Left" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
         </StackPanel>
+        <DatePicker Width="200" Margin="60,0,0,25" Style="{StaticResource datepicker}" HorizontalAlignment="Left" VerticalAlignment="Bottom" Background="#FFB4D2E0" BorderBrush="#FF2688B6" Foreground="#FF19A5CF"/>
+        <Button Content="预约" Width="100" Height="25" Margin="350,0,0,25" HorizontalAlignment="Left" VerticalAlignment="Bottom" Style="{StaticResource button}" Template="{DynamicResource MyButtonControlTemplate}"/>
     </Grid>
 </Page>
