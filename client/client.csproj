@@ -72,8 +72,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Entities.cs" />
     <Compile Include="Resources\blank.xaml.cs">
       <DependentUpon>blank.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\LoadingForm.xaml.cs">
+      <DependentUpon>LoadingForm.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Log.xaml.cs">
+      <DependentUpon>Log.xaml</DependentUpon>
     </Compile>
     <Compile Include="Resources\MyTextBlock.xaml.cs">
       <DependentUpon>MyTextBlock.xaml</DependentUpon>
@@ -104,6 +111,14 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Resources\blank.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\LoadingForm.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\Log.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

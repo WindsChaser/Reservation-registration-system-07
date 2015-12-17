@@ -73,6 +73,6 @@
             <Label Content="测试内容" FontFamily="YouYuan" FontSize="20" Foreground="#CCFFFFFF" FontWeight="Bold" HorizontalAlignment="Left" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
         </StackPanel>
         <DatePicker Width="200" Margin="60,0,0,25" Style="{StaticResource datepicker}" HorizontalAlignment="Left" VerticalAlignment="Bottom" Background="#FFB4D2E0" BorderBrush="#FF2688B6" Foreground="#FF19A5CF"/>
-        <Button Content="预约" Width="100" Height="25" Margin="350,0,0,25" HorizontalAlignment="Left" VerticalAlignment="Bottom" Style="{StaticResource button}" Template="{DynamicResource MyButtonControlTemplate}"/>
+        <Button Content="预约" Width="100" Height="25" Margin="350,0,0,25" HorizontalAlignment="Left" VerticalAlignment="Bottom" Style="{StaticResource button}" Template="{DynamicResource MyButtonControlTemplate}" Click="Button_Click"/>
     </Grid>
 </Page>

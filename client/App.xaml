@@ -279,7 +279,7 @@
                     <RowDefinition MaxHeight="{DynamicResource {x:Static SystemParameters.VerticalScrollBarButtonHeightKey}}"/>
                 </Grid.RowDefinitions>
                 <Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" Grid.Row="1"/>
-                <RepeatButton x:Name="PART_LineUpButton" Command="ScrollBar.LineUpCommand" IsEnabled="{TemplateBinding IsMouseOver}">
+                <RepeatButton x:Name="PART_LineUpButton" Command="{x:Static ScrollBar.LineUpCommand}" IsEnabled="{TemplateBinding IsMouseOver}">
                     <RepeatButton.Style>
                         <Style TargetType="{x:Type RepeatButton}">
                             <Setter Property="FocusVisualStyle">
@@ -331,7 +331,7 @@
                 </RepeatButton>
                 <Track x:Name="PART_Track" IsDirectionReversed="True" IsEnabled="{TemplateBinding IsMouseOver}" Grid.Row="1">
                     <Track.DecreaseRepeatButton>
-                        <RepeatButton Command="ScrollBar.PageUpCommand">
+                        <RepeatButton Command="{x:Static ScrollBar.PageUpCommand }">
                             <RepeatButton.Style>
                                 <Style TargetType="{x:Type RepeatButton}">
                                     <Setter Property="OverridesDefaultStyle" Value="True"/>
@@ -350,7 +350,7 @@
                         </RepeatButton>
                     </Track.DecreaseRepeatButton>
                     <Track.IncreaseRepeatButton>
-                        <RepeatButton Command="ScrollBar.PageDownCommand">
+                        <RepeatButton Command="{x:Static ScrollBar.PageDownCommand}">
                             <RepeatButton.Style>
                                 <Style TargetType="{x:Type RepeatButton}">
                                     <Setter Property="OverridesDefaultStyle" Value="True"/>
@@ -394,7 +394,7 @@
                         </Thumb>
                     </Track.Thumb>
                 </Track>
-                <RepeatButton x:Name="PART_LineDownButton" Command="ScrollBar.LineDownCommand" IsEnabled="{TemplateBinding IsMouseOver}" Grid.Row="2">
+                <RepeatButton x:Name="PART_LineDownButton" Command="{x:Static ScrollBar.LineDownCommand}" IsEnabled="{TemplateBinding IsMouseOver}" Grid.Row="2">
                     <RepeatButton.Style>
                         <Style TargetType="{x:Type RepeatButton}">
                             <Setter Property="FocusVisualStyle">

@@ -5,25 +5,54 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:client.Resources"
         mc:Ignorable="d"
-        Title="注册" Height="300" Width="300" ResizeMode="NoResize" ShowInTaskbar="False" Topmost="True">
+        Title="注册" Height="280" Width="300" ResizeMode="NoResize" ShowInTaskbar="False" Topmost="True" AllowsTransparency="True" WindowStyle="None">
+    <Window.Background>
+        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+            <GradientStop Offset="1" Color="#CCFFFFFF"/>
+            <GradientStop Color="{DynamicResource MainColorSytle}" Offset="0"/>
+        </LinearGradientBrush>
+    </Window.Background>
+    <Window.Resources>
+        <Style x:Key="button" TargetType="Button">
+            <Setter Property="FontFamily" Value="YouYuan"/>
+            <Setter Property="FontSize" Value="15"/>
+            <Setter Property="Foreground" Value="#CC000000"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+        </Style>
+    </Window.Resources>
     <Grid>
+        <Label Content="用户注册" FontSize="12"/>
         <StackPanel Margin="30,30,0,0">
-            <Label Content="用户名"/>
-            <Label Content="密码"/>
-            <Label Content="确认密码"/>
-            <Label Content="姓名"/>
-            <Label Content="身份证号"/>
-            <Label Content="手机号码"/>
-            <Label Content="邮箱"/>
+            <StackPanel Orientation="Horizontal">
+                <Label Width="75" Content="用户名"/>
+                <TextBox Name="username" Width="150" VerticalAlignment="Center" HorizontalAlignment="Right" />
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Label Width="75" Content="密码"/>
+                <PasswordBox Name="password" Width="150" VerticalAlignment="Center" HorizontalAlignment="Right" />
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Label Width="75" Content="确认密码"/>
+                <PasswordBox Name="password2" Width="150" VerticalAlignment="Center" HorizontalAlignment="Right" />
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Label Width="75" Content="姓名"/>
+                <TextBox Name="name" Width="150" VerticalAlignment="Center" HorizontalAlignment="Right" />
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Label Width="75" Content="身份证号"/>
+                <TextBox Name="IDNumber" Width="150" VerticalAlignment="Center" HorizontalAlignment="Right" />
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Label Width="75" Content="手机号"/>
+                <TextBox Name="phoneNumber" Width="150" VerticalAlignment="Center" HorizontalAlignment="Right" />
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Label Width="75" Content="邮箱"/>
+                <TextBox Name="email" Width="150" VerticalAlignment="Center" HorizontalAlignment="Right" />
+            </StackPanel>
         </StackPanel>
-        <StackPanel Margin="105,30,30,0">
-            <TextBox Width="150" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,5,0,0"/>
-            <PasswordBox Width="150" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,7,0,0"/>
-            <PasswordBox Width="150" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,8,0,0"/>
-            <TextBox Width="150" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,7,0,0"/>
-            <TextBox Width="150" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,8,0,0"/>
-            <TextBox Width="150" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,9,0,0"/>
-            <TextBox Width="150" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,10,0,0"/>
-        </StackPanel>
+        <Button Content="确认提交" Width="100" Height="25" Margin="34,0,0,27" HorizontalAlignment="Left" VerticalAlignment="Bottom" Style="{StaticResource button}" Template="{DynamicResource MyButtonControlTemplate}" MouseLeftButtonUp="submit"/>
+        <Button Content="取消" Width="100" Height="25" Margin="0,0,43,27" HorizontalAlignment="Right" VerticalAlignment="Bottom" Style="{StaticResource button}" Template="{DynamicResource MyButtonControlTemplate}" MouseLeftButtonUp="closeWindow"/>
     </Grid>
 </Window>

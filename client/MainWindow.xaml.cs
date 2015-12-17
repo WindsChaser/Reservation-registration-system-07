@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -16,14 +18,27 @@ namespace client
 	{
 		Rect NormalRect;
 		Rect workAera = SystemParameters.WorkArea;
-		Page page1, page2, page3, page4;
+		Page page1, page2, page3;
+
+		DispatcherTimer netServiceConfirm;
+
+		bool isLoggedOn = false;
+		bool isConnected = false;
+
+		Entities.ReUser user;
+		List<Entities.Hospital> hospitals;
+		NetService netservice;
+
 		public MainWindow()
 		{
 			InitializeComponent();
+			#region 启动动画
 			this.BeginAnimation( HeightProperty, new DoubleAnimation( 600, new Duration( TimeSpan.FromMilliseconds( 1200 ) ) ,FillBehavior.Stop)
 			{
 				EasingFunction = new ExponentialEase() { EasingMode = EasingMode.EaseOut, Exponent = -5 }
 			} );
+			#endregion
+			#region 定时器
 			var DateTimer = new DispatcherTimer() { Interval = TimeSpan.FromSeconds( 1 ) };
 			DateTimer.Tick += ( object sender, EventArgs e ) =>
 			{
@@ -32,8 +47,40 @@ namespace client
 				timeLabel.Content = datetime.ToString( "HH:mm:ss" );
 			};
 			DateTimer.Start();
+			#endregion
+
+			Entities.ReUser user = new Entities.ReUser();
+			List<Entities.Hospital> hospitals = new List<Entities.Hospital>();
+			NetService netservice = new NetService();
+			netservice.CreatBroadcastLinker();
+			netservice.NewServer += () =>
+			{
+				isConnected = true;
+			};
+			netServiceConfirm = new DispatcherTimer() { Interval=TimeSpan.FromSeconds(5)};
+			netServiceConfirm.Tick += (object sender,EventArgs e) =>
+			{
+				if ( !isConnected && netservice.isConnecting == false )
+				{
+					ThreadPool.QueueUserWorkItem( ( object args ) =>
+					 {
+						 netservice.isConnecting = true;
+						 netservice.ConnectServer();
+						 netservice.isConnecting = false;
+					 }, null );
+				}
+				else
+				{
+
+				}
+			};
 		}
 
+		private void Netservice_NewServer()
+		{
+			throw new NotImplementedException();
+		}
+		#region 窗口放缩处理
 		private void BackToDefaultBackground( object sender, MouseEventArgs e )
 		{
 			( (Canvas)sender ).Background = new SolidColorBrush(Colors.Transparent);
@@ -106,7 +153,7 @@ namespace client
 				ResizeToMax( null, null );
 			}
 		}
-
+		#endregion
 		private void ChangeTextColor( object sender, MouseEventArgs e )
 		{
 			( (Label)sender ).Foreground = new SolidColorBrush(Color.FromArgb(255,20,135,165));
@@ -145,6 +192,19 @@ namespace client
 				frame.BeginAnimation( Frame.OpacityProperty, new DoubleAnimation(0, 1, new Duration( TimeSpan.FromMilliseconds( 400 ) ), FillBehavior.Stop ));
 			};
             frame.BeginAnimation(Frame.OpacityProperty, animation);
+		}
+		/// <summary>
+		/// 显示等待窗口，旋转的一个圈
+		/// </summary>
+		public static string showWaitForm(Point p)
+		{
+			//在这里显示窗口，启动动画，注册请求成功事件（在消息处理方法中定义），收到事件时主动关闭窗口，并返回一个值
+			//对超时进行处理
+			LoadingForm form = new LoadingForm();
+			form.Left = p.X  - form.Width / 2;
+			form.Top = p.Y  - form.Height / 2;
+			form.ShowDialog();
+			return null;
 		}
 	}
 }

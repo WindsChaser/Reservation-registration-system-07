@@ -27,6 +27,8 @@ namespace client
 		public event NewMessageReceive NewMessage;//新消息到达事件
 		public delegate void NewServerConnected();//连接到服务器
 		public event NewServerConnected NewServer;//新的服务器
+
+		public bool isConnecting = false;
 		#endregion
 		/// <summary>
 		/// 创建广播接收器
@@ -80,7 +82,7 @@ namespace client
 			//            {
 			//                str = RequestList_send.Dequeue();
 			//            }
-			//            SendGameCommandRequest(str);
+			//            SendRequest(str);
 			//        }
 			//    }
 			//});
@@ -88,7 +90,7 @@ namespace client
 			{
 				while ( true )
 				{
-					String str = ReceiveGameCommand();
+					String str = ReceiveMessage();
 					lock ( MessageList_receive )
 					{
 						MessageList_receive.Enqueue( str );
@@ -111,7 +113,7 @@ namespace client
 		//		{
 		//			String str;
 		//			str = RequestList_send.Dequeue();
-		//			SendGameCommandRequest( str );
+		//			SendRequest( str );
 		//		}
 		//}
 		/// <summary>
@@ -119,7 +121,7 @@ namespace client
 		/// 由外部主动调用
 		/// </summary>
 		/// <param name="str"></param>
-		public void AddGameRequest( String str )
+		public void AddRequest( String str )
 		{
 			lock ( RequestList_send )
 			{
@@ -132,7 +134,7 @@ namespace client
 				{
 					String tmp;
 					tmp = RequestList_send.Dequeue();
-					SendGameCommandRequest( tmp );
+					SendRequest( tmp );
 				}
 			} ), null );
 		}
@@ -141,7 +143,7 @@ namespace client
 		/// </summary>
 		/// <param name="command"></param>
 		/// <returns></returns>
-		public void SendGameCommandRequest( String command )
+		public void SendRequest( String command )
 		{
 			byte[] buff_send = Encoding.Unicode.GetBytes( command );
 			Client_send.Send( buff_send, buff_send.Length );
@@ -149,7 +151,7 @@ namespace client
 		/// <summary>
 		/// 接收消息
 		/// </summary>
-		public String ReceiveGameCommand()
+		public String ReceiveMessage()
 		{
 			IPEndPoint remoteIEP = null;
 			byte[] buff_receive = Client_receive.Receive( ref remoteIEP );

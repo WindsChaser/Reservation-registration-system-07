@@ -10,24 +10,18 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace client.Resources
 {
 	/// <summary>
-	/// Page_CommonInfo.xaml 的交互逻辑
+	/// LoadingForm.xaml 的交互逻辑
 	/// </summary>
-	public partial class Page_CommonInfo : Page
+	public partial class LoadingForm : Window
 	{
-		public Page_CommonInfo()
+		public LoadingForm()
 		{
 			InitializeComponent();
-		}
-
-		private void Button_Click( object sender, RoutedEventArgs e )
-		{
-			MainWindow.showWaitForm( this.PointToScreen( new Point( this.ActualWidth / 2, this.ActualHeight / 2 ) ) );
 		}
 	}
 }

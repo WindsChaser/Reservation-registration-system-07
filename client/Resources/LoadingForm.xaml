@@ -1,0 +1,44 @@
+﻿<Window x:Class="client.Resources.LoadingForm"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:client.Resources"
+        mc:Ignorable="d"
+        Title="LoadingForm" Height="40" Width="40" AllowsTransparency="True" WindowStyle="None" Background="{x:Null}">
+    <Grid>
+        <Ellipse StrokeThickness="5" RenderTransformOrigin="0.5,0.5">
+            <Ellipse.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform x:Name="trans" Angle="0"/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </Ellipse.RenderTransform>
+            <Ellipse.Stroke>
+                <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
+                    <GradientStop Color="White" Offset="0"/>
+                    <GradientStop Color="#008AD4EA" Offset="1"/>
+                    <GradientStop Color="#FE57AAE4" Offset="0.25"/>
+                    <GradientStop Color="#FE69AEF3" Offset="0.375"/>
+                    <GradientStop Color="#CC4CC6D9" Offset="0.5"/>
+                    <GradientStop Color="#995BDAE0" Offset="0.625"/>
+                    <GradientStop Color="#667CB6DE" Offset="0.75"/>
+                    <GradientStop Color="#33D0D6EA" Offset="0.874"/>
+                    <GradientStop Color="#FE5AE7E1" Offset="0.125"/>
+                </LinearGradientBrush>
+            </Ellipse.Stroke>
+            <Ellipse.Triggers>
+                <EventTrigger RoutedEvent="Loaded">
+                    <BeginStoryboard>
+                        <Storyboard RepeatBehavior="Forever">
+                            <DoubleAnimation Storyboard.TargetName="trans" Storyboard.TargetProperty="Angle"
+                                             From="0" To="360" Duration="0:0:1" />
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+            </Ellipse.Triggers>
+        </Ellipse>
+    </Grid>
+</Window>
