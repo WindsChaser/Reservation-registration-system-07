@@ -87,6 +87,18 @@ namespace server
 					return;
 				ThreadPool.QueueUserWorkItem( ( Object state ) =>
 				 {
+					 //request = "id;hospital;name;name";
+					 //string[] tmp = request.Split(';');
+					 //if ( tmp[0].Equals( "hospital" ) )
+					 //{
+						// //
+						// string ret = null;
+						// netService.AddCommand(id,ret);
+					 //}
+					 //else if ( tmp[0].Equals( "office" ) )
+					 //{
+
+					 //}
 					 //对取出来的客户端请求进行处理,如注册请求，检查用户名和密码，分配id，调用数据库服务写入数据库
 					 //如查询请求，拆分字段，调用数据库服务查询并返回结果
 					 //可以先区分请求类型，然后调用不同的方法（每种请求类型一个方法）

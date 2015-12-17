@@ -23,8 +23,8 @@ namespace server
 			{
 				MemoryStream ms = new MemoryStream();
 				CryptoStream cStream = new CryptoStream(ms,new DESCryptoServiceProvider().CreateEncryptor( Key, IV ),
-					CryptoStreamMode.Write );// 使用内存流和秘钥、向量创建一个复制流				
-				StreamWriter sWriter = new StreamWriter( cStream );// 创建流写入器											   
+					CryptoStreamMode.Write );// 使用内存流和秘钥、向量创建一个复制流
+				StreamWriter sWriter = new StreamWriter( cStream );// 创建流写入器							   
 				sWriter.Write( Data );//写入欲加密数据
 				sWriter.Close();
 				cStream.Close();

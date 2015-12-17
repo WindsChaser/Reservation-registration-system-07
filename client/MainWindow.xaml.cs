@@ -57,8 +57,8 @@ namespace client
 			{
 				isConnected = true;
 			};
-			netServiceConfirm = new DispatcherTimer() { Interval=TimeSpan.FromSeconds(5)};
-			netServiceConfirm.Tick += (object sender,EventArgs e) =>
+			netServiceConfirm = new DispatcherTimer() { Interval = TimeSpan.FromSeconds( 5 ) };
+			netServiceConfirm.Tick += ( object sender, EventArgs e ) =>
 			{
 				if ( !isConnected && netservice.isConnecting == false )
 				{

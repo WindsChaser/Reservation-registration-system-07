@@ -53,6 +53,10 @@
 			this.label3 = new System.Windows.Forms.Label();
 			this.label = new System.Windows.Forms.Label();
 			this.groupBox2 = new System.Windows.Forms.GroupBox();
+			this.label11 = new System.Windows.Forms.Label();
+			this.label10 = new System.Windows.Forms.Label();
+			this.label9 = new System.Windows.Forms.Label();
+			this.label8 = new System.Windows.Forms.Label();
 			this.listView1 = new System.Windows.Forms.ListView();
 			this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -60,10 +64,6 @@
 			this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeader5 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.performanceCounter4 = new System.Diagnostics.PerformanceCounter();
-			this.label8 = new System.Windows.Forms.Label();
-			this.label9 = new System.Windows.Forms.Label();
-			this.label10 = new System.Windows.Forms.Label();
-			this.label11 = new System.Windows.Forms.Label();
 			this.performanceCounter5 = new System.Diagnostics.PerformanceCounter();
 			this.performanceCounter6 = new System.Diagnostics.PerformanceCounter();
 			this.statusStrip1.SuspendLayout();
@@ -177,6 +177,7 @@
 			this.button1.TabIndex = 2;
 			this.button1.Text = "启动";
 			this.button1.UseVisualStyleBackColor = true;
+			this.button1.Click += new System.EventHandler(this.button1_Click);
 			// 
 			// label2
 			// 
@@ -308,6 +309,50 @@
 			this.groupBox2.TabIndex = 3;
 			this.groupBox2.TabStop = false;
 			// 
+			// label11
+			// 
+			this.label11.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.label11.AutoSize = true;
+			this.label11.Font = new System.Drawing.Font("宋体", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+			this.label11.Location = new System.Drawing.Point(289, 375);
+			this.label11.Name = "label11";
+			this.label11.Size = new System.Drawing.Size(141, 27);
+			this.label11.TabIndex = 4;
+			this.label11.Text = "磁盘I/O：";
+			// 
+			// label10
+			// 
+			this.label10.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.label10.AutoSize = true;
+			this.label10.Font = new System.Drawing.Font("宋体", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+			this.label10.Location = new System.Drawing.Point(289, 330);
+			this.label10.Name = "label10";
+			this.label10.Size = new System.Drawing.Size(348, 27);
+			this.label10.TabIndex = 3;
+			this.label10.Text = "网络吞吐量：（手动统计）";
+			// 
+			// label9
+			// 
+			this.label9.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.label9.AutoSize = true;
+			this.label9.Font = new System.Drawing.Font("宋体", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+			this.label9.Location = new System.Drawing.Point(10, 375);
+			this.label9.Name = "label9";
+			this.label9.Size = new System.Drawing.Size(152, 27);
+			this.label9.TabIndex = 2;
+			this.label9.Text = "内存占用：";
+			// 
+			// label8
+			// 
+			this.label8.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.label8.AutoSize = true;
+			this.label8.Font = new System.Drawing.Font("宋体", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+			this.label8.Location = new System.Drawing.Point(10, 330);
+			this.label8.Name = "label8";
+			this.label8.Size = new System.Drawing.Size(169, 27);
+			this.label8.TabIndex = 1;
+			this.label8.Text = "CPU占用率：";
+			// 
 			// listView1
 			// 
 			this.listView1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -356,50 +401,6 @@
 			this.performanceCounter4.CategoryName = "Process";
 			this.performanceCounter4.CounterName = "% Processor Time";
 			this.performanceCounter4.InstanceName = "server";
-			// 
-			// label8
-			// 
-			this.label8.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-			this.label8.AutoSize = true;
-			this.label8.Font = new System.Drawing.Font("宋体", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-			this.label8.Location = new System.Drawing.Point(10, 330);
-			this.label8.Name = "label8";
-			this.label8.Size = new System.Drawing.Size(169, 27);
-			this.label8.TabIndex = 1;
-			this.label8.Text = "CPU占用率：";
-			// 
-			// label9
-			// 
-			this.label9.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-			this.label9.AutoSize = true;
-			this.label9.Font = new System.Drawing.Font("宋体", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-			this.label9.Location = new System.Drawing.Point(10, 375);
-			this.label9.Name = "label9";
-			this.label9.Size = new System.Drawing.Size(152, 27);
-			this.label9.TabIndex = 2;
-			this.label9.Text = "内存占用：";
-			// 
-			// label10
-			// 
-			this.label10.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.label10.AutoSize = true;
-			this.label10.Font = new System.Drawing.Font("宋体", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-			this.label10.Location = new System.Drawing.Point(289, 330);
-			this.label10.Name = "label10";
-			this.label10.Size = new System.Drawing.Size(348, 27);
-			this.label10.TabIndex = 3;
-			this.label10.Text = "网络吞吐量：（手动统计）";
-			// 
-			// label11
-			// 
-			this.label11.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.label11.AutoSize = true;
-			this.label11.Font = new System.Drawing.Font("宋体", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-			this.label11.Location = new System.Drawing.Point(289, 375);
-			this.label11.Name = "label11";
-			this.label11.Size = new System.Drawing.Size(141, 27);
-			this.label11.TabIndex = 4;
-			this.label11.Text = "磁盘I/O：";
 			// 
 			// performanceCounter5
 			// 

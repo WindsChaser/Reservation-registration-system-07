@@ -30,6 +30,20 @@ namespace client
 
 		public bool isConnecting = false;
 		#endregion
+		public NetService()
+		{
+			//获取本机地址
+			IPAddress[] ips = Dns.GetHostAddresses( Dns.GetHostName() );
+			//获取本地可用IPv4地址
+			foreach ( IPAddress ipa in ips )
+			{
+				if ( ipa.AddressFamily == AddressFamily.InterNetwork )
+				{
+					localIP = ipa;
+					break;
+				}
+			}
+		}
 		/// <summary>
 		/// 创建广播接收器
 		/// </summary>

@@ -16,6 +16,15 @@ namespace server
 		{
 			InitializeComponent();
 
+			////
+			//DBService test = new DBService();
+			//test.initService();
+			//test.startService();
+			//string ret=test.addNewRequest(null) as string;
+
+
+
+
 			timer.Tick += (object sender,EventArgs e) =>
 			{
 				float CPUutilization = performanceCounter1.NextValue();
@@ -42,6 +51,11 @@ namespace server
 
 			};
 			timer.Start();
+		}
+
+		private void button1_Click( object sender, EventArgs e )
+		{
+
 		}
 	}
 }
